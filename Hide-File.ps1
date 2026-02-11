@@ -4,7 +4,7 @@ if ($args.count -eq 0) {
 	return 1
 }
 
-# Parse flag arguments.
+# Parses flag arguments.
 # As per POSIX standards, these must precede any non-flag arguments.
 # Exits with error code and error message if an unnacceptable flag was given.
 $quiet = false
@@ -97,7 +97,7 @@ for ($i = $nonFlagOffset; $i -lt $args.count; $i = $i + 1) {
 		continue
 	}
 	$attributes = $file.Attributes
-	Write-Host "${file} attributes before: ${attributes}"
+	Write-Debug "${file} attributes before: ${attributes}"
 	$file.Attributes = Set-Attribute $attributes "Hidden"
-	Write-Host "${file} attributes after: $($file.attributes)"
+	Write-Debug "${file} attributes after: $($file.attributes)"
 }
