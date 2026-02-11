@@ -65,7 +65,7 @@ $help = "Change-Name [Options] <from> <to>
 		subdir/subsub/b.txt"
 
 # Hash table of options. The values will be mutated when parsing arguments.
-$opts = @{h = $false; d = $false; m = $false; f = $false; c = false}
+$opts = @{h = $false; d = $false; m = $false; f = $false; c = $false}
 
 # Maps long-form option names to their short-hand.
 $longToShort = @{"help" = "h"; "dryrun" = "d"; "move" = "m"; "force" = "f"; "confirm" = "c"}
@@ -116,9 +116,11 @@ function Get-Initial {
 		$sub = $arg -replace "[-_]", ""
 		Write-Debug "The argument ${arg} became ${sub}."
 		return $longToShort.Item($sub.toLower())
-	} else {
+	}
+	if ($arg.length -eq 2) {
 		return "$($arg[1])".toLower()
 	}
+	return $arg
 }
 
 # Returns the index of the first occurrence of 'character' in 'arg'.
@@ -215,37 +217,13 @@ function Write-Action {
 
 	# Append number of files changed.
 	$action = "${action} ${filesFound} file"
-	if ($in.count -gt 1) {
-		$action = "${action}s."
-	} else {
+	if ($in.count -eq 1) {
 		$action = "${action}."
+	} else {
+		$action = "${action}s."
 	}
 
 	Write-Host "${action}"
-}
-
-# If <to> has an asterisk, replace it with the input file name.
-# Otherwise, just set the output name to equal <to>.
-function New-Name {
-	param (
-		[Parameter(Mandatory)]
-		[string]$to,
-
-		[Parameter(Mandatory)]
-		[string]$old_name
-	)
-	$wildcard_to = Find-Character $to_name '*'
-	if ($wildcard_to -ge 0) {
-		$prefix = $to_name.substring(0, $wildcard_to)
-		$suffix = ""
-		if ($wildcard -lt ($to_name.length - 1)) {
-			$suffix = $to_name.substring($wildcard_to + 1)
-		}
-		return "${prefix}${old_name}${suffix}"
-	} else {
-		return "${to}"
-	}
-
 }
 
 function Update-Directories {
@@ -379,10 +357,10 @@ for ($i = 0; $i -lt $in.count; $i = $i + 1) {
 	$dir = [System.IO.Path]::GetDirectoryName($path)
 
 	# Determine the new name.
-	if ($parts.count -eq 1) {
-		$out = "${out}${ext}"
-	} else {
+	if ($parts.count -eq 2) {
 		$out = "$($parts[0])${name}$($parts[1])${ext}"
+	} else {
+		$out = "${out}${ext}"
 	}
 
 	# Join any subdirectories specified in <to> with the output filename.
@@ -396,7 +374,7 @@ for ($i = 0; $i -lt $in.count; $i = $i + 1) {
 	$out = [System.IO.Path]::Combine($dir, $out)
 	
 	# Write the fully-qualified name of the input file and output file.
-	Write-Host "$($i + 1)	$($path)	->	$($out)"
+	Write-Host "$($i + 1)	${path}	->	${out}"
 	if (!$opts["d"]) {
 		Update-Directories $must_create_subdirs $dir
 		Update-File $path $out
