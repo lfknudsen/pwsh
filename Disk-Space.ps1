@@ -1,0 +1,1 @@
+Get-WmiObject -Class Win32_LogicalDisk -ComputerName LOCALHOST | Where-Object {$_. DriveType -eq 3} | Select-Object DeviceID, {[int]($_.Size /1GB)}, {[int]($_.FreeSpace /1GB)}
