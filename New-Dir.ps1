@@ -11,5 +11,5 @@ param (
     [Parameter(Mandatory=$true)][string]$path = $(Read-Host "Enter name of new directory:")
 )
 
-New-Item -Type directory -Name $args[0] > $Null
-Set-Location $args[0]
+New-Item -Type directory -Name $path > $Null
+Set-Location $path
