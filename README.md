@@ -22,7 +22,7 @@ Creates a new directory with the given name and then enters it.\
 Also omits the huge stdout statement PowerShell normally gives `mkdir`.
 
 ```
-New-Dir.ps1 <new dir name>
+ndir <new dir name>
 ```
 
 I personally alias this to `ndir`.
@@ -33,9 +33,8 @@ Creates multiple sub-directories at once.\
 I alias this to `mkdirs`.
 
 ```
-Make-Dirs.ps1 <new dir name>...
+mkdirs <new dir name>...
 ```
-
 
 ## Disk-Space (space)
 
@@ -45,7 +44,7 @@ Almost certainly Windows exclusive.
 ## Open-Env (path)
 
 Opens the dialog window for adding new environment variables.\
-Almost certainly Windows exclusive.
+Almost certainly Windows exclusive.\
 
 ## Push-All
 
