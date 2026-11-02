@@ -3,6 +3,8 @@
 Shell scripts I use. Each header below shows the script name followed\
 by what I personally alias it to.
 
+See [this repository](https://gitlab.com/lfknudsen/pwsh-config) for my config file.
+
 ## Change-Dir (cd)
 
 Automatically transforms multiple inputs into one, so that\
