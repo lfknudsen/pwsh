@@ -50,7 +50,7 @@ Almost certainly Windows exclusive.
 ## Push-All
 
 Executes `git push` on each remote registered in the current git repository.\
-See [push](https://gitlab.com/lfknudsen/push) for a slightly more feature-rich, natively compiled version I wrote later.\
+See [push](https://gitlab.com/lfknudsen/push) for a slightly more feature-rich, natively compiled version I wrote later.
 
 ## Hide-File
 
