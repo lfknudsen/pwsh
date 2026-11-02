@@ -51,10 +51,26 @@ Almost certainly Windows exclusive.\
 Executes `git push` on each remote registered in the current git repository.\
 See [push](https://gitlab.com/lfknudsen/push) for a slightly more feature-rich, natively compiled version I wrote later.
 
-## Hide-File
+## Hide-File (hide)
 
-Does what it says on the tin. I don't remember when I wrote this.
+Adds the 'Hidden' attribute to the given file(s). I'm not sure I've ever used this;
+I may have originally just written it as an experiment. Since refactoring it and fixing some issues it had, I alias this to `hide`.
+
+```
+hide [-u] <files...>
+```
+
+If supplied with `-u` will reveal the file(s) instead.
+
+## Reveal-File (reveal, unhide)
+
+Removes the 'Hidden' attribute from the given file(s). I wrote this when refactoring Hide-File.ps1.
+I alias this to `reveal` and `unhide`.
+
+`reveal <file(s)` is equivalent to `hide -u <file(s)>`, but you can only alias a command on its own (i.e. you cannot include -u in the alias value), and as such I decided to make it standalone.
+
 
 ## Change-Name
 
-Batch renaming of files not affecting their extensions. I don't remember when I wrote this.
+Batch renaming of files not affecting their extensions. I don't remember when I wrote this, and so it may not have been complete when I decided to make this repo public. Double-check
+the code or do a dry run first :)
