@@ -39,17 +39,18 @@ Make-Dirs.ps1 <new dir name>...
 
 ## Disk-Space (space)
 
-Displays the total and remaining disk space on each drive.
+Displays the total and remaining disk space on each drive.\
+Almost certainly Windows exclusive.
 
 ## Open-Env (path)
 
-Opens the dialog window for adding new environment variables.
+Opens the dialog window for adding new environment variables.\
+Almost certainly Windows exclusive.
 
 ## Push-All
 
 Executes `git push` on each remote registered in the current git repository.\
-See [push](https://gitlab.com/lfknudsen/push) for a slightly more feature-rich,\
-natively compiled version I wrote later.
+See [push](https://gitlab.com/lfknudsen/push) for a slightly more feature-rich, natively compiled version I wrote later.\
 
 ## Hide-File
 
@@ -57,4 +58,4 @@ Does what it says on the tin. I don't remember when I wrote this.
 
 ## Change-Name
 
-Batch renaming of files not affecting their extensions.
+Batch renaming of files not affecting their extensions. I don't remember when I wrote this.
