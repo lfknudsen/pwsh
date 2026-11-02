@@ -16,6 +16,21 @@ cd <sub directory>
 
 I recommend aliasing this to `cd` in your $profile file.
 
+## goto
+
+If the input path is a file, this command will `cd` to its directory.
+If the input path is a directory, this command will just `cd` there directly.
+
+```
+goto <file name|directory name>
+```
+
+Example to go to the same directory as your PowerShell config file:
+```
+goto $profile
+```
+
+
 ## New-Dir (ndir)
 
 Creates a new directory with the given name and then enters it.\
