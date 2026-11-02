@@ -35,7 +35,7 @@ if ($debug) {
 	Write-Host "Non-flag arguments start at index ${nonFlagOffset}:"
 	for ($i = $nonFlagOffset; $i -lt $args.count; $i = $i + 1) {
 		$file = Get-Item -File $args[$i]
-		if ($file -eq $null) {
+		if ($null -eq $file) {
 			continue
 		}
 		Write-Host "$file"
@@ -50,7 +50,7 @@ if ($args.count -le $nonFlagOffset) {
 	return 1;
 }
 
-function Contains-Value {
+function Find-Value {
 	param (
 		[Parameter(Mandatory)]
 		[Object[]]$Array,
@@ -76,7 +76,7 @@ function Set-Attribute {
 		[System.IO.FileAttributes]$NewAttribute
 	)
 
-	$contains = Contains-Value $AttributeList $NewAttribute
+	$contains = Find-Value $AttributeList $NewAttribute
 
 	if (!$contains) {
 		$AttributeList += $NewAttribute
@@ -87,9 +87,9 @@ function Set-Attribute {
 for ($i = $nonFlagOffset; $i -lt $args.count; $i = $i + 1) {
 	$name = $args[$i]
 	$file = Get-Item -ErrorAction SilentlyContinue $name
-	if ($file -eq $null) {
+	if ($null -eq $file) {
 		$file = Get-item -Force -ErrorAction SilentlyContinue $name
-		if (!($file -eq $null)) {
+		if (!($null -eq $file)) {
 			Write-Host "$file is either already hidden, a system file, or not a file at all."
 		} else {
 			Write-Host "Could not find ${name}."
