@@ -25,6 +25,16 @@ New-Dir.ps1 <new dir name>
 
 I personally alias this to `ndir`.
 
+## Make-Dirs (mkdirs)
+
+Creates multiple sub-directories at once.\
+I alias this to `mkdirs`.
+
+```
+Make-Dirs.ps1 <new dir name>...
+```
+
+
 ## Disk-Space (space)
 
 Displays the total and remaining disk space on each drive.
