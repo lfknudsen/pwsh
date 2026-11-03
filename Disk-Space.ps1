@@ -1,3 +1,11 @@
+<#
+.SYNOPSIS
+Shows the total size and free space left on each drive in a table.
+.DESCRIPTION
+Shows the total size and free space left on each drive in a table.
+Windows exclusive.
+#>
+
 Get-WmiObject -Class Win32_LogicalDisk -ComputerName LOCALHOST `
 | Where-Object { $_. DriveType -eq 3 } `
 | Select-Object @{
