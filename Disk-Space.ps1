@@ -8,14 +8,20 @@ Windows exclusive.
 
 Get-WmiObject -Class Win32_LogicalDisk -ComputerName LOCALHOST `
 | Where-Object { $_. DriveType -eq 3 } `
-| Select-Object @{
+| Format-Table @{
     Label      = "Disk"
     Expression = { $_.DeviceID }
 }, @{
     Label      = "Total size"
-    Expression = { [Math]::Round([float]($_.Size / 1.00GB), 2) }
+    # 7 = Label.Count - " GB".Count
+    # 2 = 2 decimal places, which is what we round it to
+    Expression = { "{0,7:N2} GB" -f [Math]::Round($_.Size / 1.00GB, 2) }
+    Alignment="right"
 },
 @{
-    Label      = "Free space"
-    Expression = { [Math]::Round([float]($_.FreeSpace / 1.00GB), 2) }
+    Name      = "Free space"
+    # 7 = Label.Count - " GB".Count
+    # 2 = 2 decimal places, which is what we round it to
+    Expression = { "{0,7:N2} GB" -f [Math]::Round($_.FreeSpace / 1.00GB, 2) }
+    Alignment="right"
 }
