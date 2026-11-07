@@ -8,7 +8,11 @@ The name of the new directory.
 #>
 
 param (
-    [Parameter(Mandatory=$true)][string]$path = $(Read-Host "Enter name of new directory:")
+    [Parameter(
+        Mandatory = $true,
+        ValueFromPipeline = $true,
+        Position = 1
+    )] [string] $path = $(Read-Host "Enter name of new directory:")
 )
 
 New-Item -Type directory -Name $path > $Null
