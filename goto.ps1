@@ -11,6 +11,7 @@ param (
     [Parameter(Mandatory=$true)][string]$path
 )
 
+# Returns the index of the first instance of $Value in $Array, or -1 if it isn't present.
 function Find-Value {
     param (
         [Parameter(Mandatory)]
@@ -27,7 +28,9 @@ function Find-Value {
     return -1
 }
 
+# GetAttributes returns a string, which we convert to an array.
 $attributes = [System.IO.File]::GetAttributes($path) -split ", "
+
 $index = Find-Value $attributes "Directory"
 if ($index -eq -1) {
     $directory = [System.IO.Path]::GetDirectoryName($path)
