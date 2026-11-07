@@ -1,5 +1,5 @@
 if ($Args.Count -eq 0) {
-    Exit-PSHostProcess(1);
+    return
 }
 $loc = $Args[0];
 if (!($Args.Count -eq 1)) {
