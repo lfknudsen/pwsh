@@ -1,3 +1,12 @@
+<#
+.SYNOPSIS
+Set the location of the shell. Arguments are joined into a single string,
+such that `cd a b` is equivalent to `cd "a b"`.
+.DESCRIPTION
+Set the location of the shell. Arguments are joined into a single string,
+such that `cd a b` is equivalent to `cd "a b"`.
+#>
+
 if ($Args.Count -eq 0) {
     return
 }
