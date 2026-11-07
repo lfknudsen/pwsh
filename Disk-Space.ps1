@@ -6,8 +6,8 @@ Shows the total size and free space left on each drive in a table.
 Windows exclusive.
 #>
 
-Get-WmiObject -Class Win32_LogicalDisk -ComputerName LOCALHOST `
-| Where-Object { $_. DriveType -eq 3 } `
+$obj = Get-WmiObject -Class Win32_LogicalDisk -ComputerName LOCALHOST
+$obj.Where({$_. DriveType -eq 3}) `
 | Format-Table @{
     Label      = "Disk"
     Expression = { $_.DeviceID }
