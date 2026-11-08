@@ -7,6 +7,15 @@ Set the location of the shell. Arguments are joined into a single string,
 such that `cd a b` is equivalent to `cd "a b"`.
 #>
 
+param (
+    [Parameter(
+        Mandatory=$true,
+        ValueFromPipeline=$true,
+        ValueFromRemainingArguments=$true
+    )
+    ][Object[]]$Args
+)
+
 if ($Args.Count -eq 0) {
     return
 }
