@@ -22,7 +22,8 @@ if ($null -eq $attributeString) {
     exit 1
 }
 $attributes = $attributeString -split ", "
-if ($attributes.Contains("Directory")) {
+# A directory entry's attributes are either returned as a comma-separated "list" or an integer.
+if ($attributes.Contains("Directory") -or $attributeString -band [System.IO.FileAttributes]::Directory) {
     Set-Location $path
 } else {
     $directory = [System.IO.Path]::GetDirectoryName($path)
