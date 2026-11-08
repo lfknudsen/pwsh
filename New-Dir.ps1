@@ -3,9 +3,16 @@
 New-Dir creates a new directory, then enters it.
 .DESCRIPTION
 New-Dir creates a new directory, then enters it.
-.PARAMETER <path>
-The name of the new directory.
 #>
+
+param (
+    [Parameter(
+        Mandatory = $true,
+        ValueFromPipeline = $true,
+        ValueFromRemainingArguments = $true
+    )
+    ][Object[]]$Args
+)
 
 if ($Args.Count -eq 0) {
     Write-Error "Must provide path argument."
