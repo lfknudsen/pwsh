@@ -12,9 +12,11 @@ param (
 )
 
 # GetAttributes returns a string, which we convert to an array.
-$sep = [System.IO.Path]::DirectorySeparatorChar
-$path = "$pwd$sep$path"
-$path = [System.IO.Path]::GetFullPath($path)
+if (!([System.IO.Path]::IsPathRooted($path))) {
+    $sep = [System.IO.Path]::DirectorySeparatorChar
+    $path = "$pwd$sep$path"
+    $path = [System.IO.Path]::GetFullPath($path)
+}
 $attributeString = [System.IO.File]::GetAttributes($path)
 if ($null -eq $attributeString) {
     exit 1
