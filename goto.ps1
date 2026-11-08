@@ -11,6 +11,11 @@ param (
     [Parameter(Mandatory=$true)][string]$path
 )
 
+if ($path -eq "..") {
+    Set-Location ..
+    exit
+}
+
 # GetAttributes returns a string, which we convert to an array.
 if (!([System.IO.Path]::IsPathRooted($path))) {
     $sep = [System.IO.Path]::DirectorySeparatorChar
