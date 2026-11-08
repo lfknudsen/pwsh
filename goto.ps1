@@ -15,10 +15,6 @@ param (
 $sep = [System.IO.Path]::DirectorySeparatorChar
 $path = "$pwd$sep$path"
 $path = [System.IO.Path]::GetFullPath($path)
-if (!([System.IO.File]::Exists($path))) {
-    Write-Error "'$path' does not exist."
-    exit 1
-}
 $attributeString = [System.IO.File]::GetAttributes($path)
 if ($null -eq $attributeString) {
     exit 1
