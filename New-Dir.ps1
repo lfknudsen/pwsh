@@ -28,4 +28,7 @@ if ([System.String]::IsNullOrWhiteSpace($path)) {
     exit 1
 }
 New-Item -Type directory -Name $path > $Null
+if ($? -eq $false) {
+    exit 1 # Exit early if unable to create directory.
+}
 Set-Location $path
