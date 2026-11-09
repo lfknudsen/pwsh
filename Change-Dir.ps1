@@ -20,8 +20,6 @@ if ($Args.Count -eq 0) {
     exit 1
 }
 
-$before = $pwd.Path.Clone()
-
 $loc = $Args[0];
 if (!($Args.Count -eq 1)) {
     $loc = [String]::Join(" ", $Args);
@@ -30,6 +28,8 @@ if (!($Args.Count -eq 1)) {
 if ($loc -eq "." -or [String]::IsNullOrWhiteSpace($loc)) {
     exit 0
 }
+
+$before = $pwd.Path.Clone()
 
 if ($loc -eq "-") {
     Push-Location -Path $before -StackName "secondary"
