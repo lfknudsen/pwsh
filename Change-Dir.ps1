@@ -17,7 +17,7 @@ param (
 )
 
 if ($Args.Count -eq 0) {
-    return
+    exit 1
 }
 $loc = $Args[0];
 if (!($Args.Count -eq 1)) {
