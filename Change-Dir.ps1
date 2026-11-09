@@ -72,7 +72,7 @@ if ($loc -eq "+") {
 }
 
 if ($loc -eq "..") {
-    $loc = $before;
+    $loc = [System.IO.Path]::GetDirectoryName($before);
 }
 
 if (![System.IO.Path]::IsPathRooted($loc)) {
