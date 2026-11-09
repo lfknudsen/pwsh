@@ -2,9 +2,21 @@
 .DESCRIPTION
 If $path is a directory, cd there.
 If $path is a file, go to its directory.
+
+This programme can serve as a complete replacement of `cd`, as it also supports the
+special `cd` arguments `..`, `-`, and `~`:
+`goto ..` will go to the parent directory of the present working directory.
+`goto -` will go to the last directory you were in (working like a stack).
+`goto ~` will go to the home directory.
+
+Input can be piped.
+
+If multiple inputs are given, they will be joined together: executing `goto a b` is the same
+as executing `goto "a b"`.
+
 .SYNOPSIS
-If $path is a directory, cd there.
 If $path is a file, go to its directory.
+Otherwise, works exactly like `cd`.
 #>
 
 param (
