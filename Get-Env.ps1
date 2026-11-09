@@ -8,61 +8,31 @@ If set, the output list will be sorted alphabetically.
 .PARAMETER dedup
 If set, the output list will have duplicates removed. Implies -sort.
 .PARAMETER variable
-The name or names of the environment variables whose values should be printed.
+The name or names of the environment variables whose values should be printed. Default is "Path".
+If "*", print values of all environment variables.
 #>
 param (
     [Parameter(
-        Mandatory=$false
+        Mandatory = $false
     )]
     [switch]$sort = $false,
     
     [Parameter(
-        Mandatory=$false
+        Mandatory = $false
     )]
     [switch]$dedup = $false,
 
     [Parameter(
-        Mandatory = $true,
+        Mandatory = $false,
         ValueFromPipeline = $true,
         ValueFromRemainingArguments = $true
     )]
-    [string[]]$variable
+    [string[]]$variable = "Path"
 )
 
-if ($dedup) {
-    $sort = $true
-}
-
-if ($sort) {
-    $values = @()
-    foreach ($var in $variable) {
-        $env = [Environment]::GetEnvironmentVariable($var).TrimEnd(';')
-        if ($env -eq "") {
-            continue
-        }
-        $varvalues = $env -split ';'
-        foreach ($value in $varvalues) {
-            $values += $value
-        }
-    }
-
-    if ($values.Count -eq 0) {
-        return
-    }
-
-    [System.Array]::Sort($values)
-
-    if ($dedup) {
-        $prededupped = $values.Clone()
-        $values = @($prededupped[0])
-        for ($i = 1; $i -lt $prededupped.Count; $i++) {
-            if ($prededupped[$i] -ne $values[$values.Count - 1]) {
-                $values += $prededupped[$i]
-            }
-        }
-    }
-    Write-Output $values
-    exit
+$values = @()
+if ($variable -eq "*") {
+    $variable = [Environment]::GetEnvironmentVariables().Keys
 }
 
 foreach ($var in $variable) {
@@ -70,5 +40,31 @@ foreach ($var in $variable) {
     if ($env -eq "") {
         continue
     }
-    $env -split ';'
+    $varvalues = $env -split ';'
+    foreach ($value in $varvalues) {
+        $values += $value
+    }
 }
+
+if ($values.Count -eq 0) {
+    return
+}
+
+if ($dedup) {
+    $sort = $true
+}
+
+if ($sort) {
+    [System.Array]::Sort($values)
+}
+if ($dedup) {
+    $prededupped = $values.Clone()
+    $values = @($prededupped[0])
+    for ($i = 1; $i -lt $prededupped.Count; $i++) {
+        if ($prededupped[$i] -ne $values[$values.Count - 1]) {
+            $values += $prededupped[$i]
+        }
+    }
+}
+
+Write-Output $values
