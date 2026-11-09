@@ -25,7 +25,13 @@ if (!($Args.Count -eq 1)) {
 }
 
 if ($loc -eq "-") {
-    Pop-Location
+    Push-Location -Path $pwd -StackName "secondary"
+    Pop-Location -StackName ""
+    exit 0
+}
+
+if ($loc -eq "+") {
+    Pop-Location -StackName "secondary" *> $null
     exit 0
 }
 
@@ -33,4 +39,10 @@ if ($loc -eq "..") {
     $current = Get-Location;
     $loc = [System.IO.Path]::GetDirectoryName($current);
 }
-Push-Location -Path $loc
+
+Pop-Location -StackName "secondary" *> $null
+while ($?) {
+    Pop-Location -StackName "secondary" *> $null
+}
+
+Push-Location -Path $loc -StackName ""
