@@ -33,20 +33,12 @@ if ($loc -eq "." -or [String]::IsNullOrWhiteSpace($loc)) {
     exit 0
 }
 
-$before = $pwd.Path.Clone()
+$before = (Get-Location).Path.Clone()
 
 if ($loc -eq "-") {
     Push-Location -Path $before -StackName "secondary"
     Pop-Location -StackName "primary" *> $null
-    if ($?) {
-        $here = (Get-Location).Path.ToString()
-        if ($before -ne $here) {
-            #Push-Location -Path $before -StackName "secondary"
-            Set-Location -StackName ""
-            Set-Location $here
-        }
-    }
-    else {
+    if (!$?) {
         Pop-Location -StackName "secondary"
         Write-Host "End of stack reached."
     }
@@ -56,15 +48,7 @@ if ($loc -eq "-") {
 if ($loc -eq "+") {
     Push-Location -Path $before -StackName "primary"
     Pop-Location -StackName "secondary" *> $null
-    if ($?) {
-        $here = (Get-Location).Path.ToString()
-        if ($before -ne $here) {
-            #Push-Location -Path $before -StackName "primary"
-            Set-Location -StackName ""
-            Set-Location $here
-        }
-    }
-    else {
+    if (!$?) {
         Pop-Location -StackName "primary"
         Write-Host "End of stack reached."
     }
