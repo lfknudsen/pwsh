@@ -14,7 +14,15 @@ param (
 # Makes "goto .." the same speed as "cd .."
 # Pretty pointless, but I've caught myself using "goto .." now and then
 if ($path -eq "..") {
-    Set-Location ..
+    Push-Location -Path ..
+    exit
+}
+if ($path -eq "-") {
+    Pop-Location
+    exit
+}
+if ($path -eq "~") {
+    Push-Location -Path ~
     exit
 }
 
@@ -40,9 +48,9 @@ $attributes = $attributeString -split ", "
 # so we check it either way.
 if ($attributes.Contains("Directory") -or $attributeString -band [System.IO.FileAttributes]::Directory) {
     # Was a directory
-    Set-Location $path
+    Push-Location $path
 } else {
     # Was a file
     $directory = [System.IO.Path]::GetDirectoryName($path)
-    Set-Location -Path $directory
+    Push-Location -Path $directory
 }
