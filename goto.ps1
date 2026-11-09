@@ -8,35 +8,41 @@ If $path is a file, go to its directory.
 #>
 
 param (
-    [Parameter(Mandatory=$true)][string]$path
+    [Parameter(
+        Mandatory=$true,
+        ValueFromPipeline=$true,
+        ValueFromRemainingArguments=$true
+    )][string[]]$path
 )
+
+$loc = [System.String]::Join(" ", $path)
 
 # Makes "goto .." the same speed as "cd .."
 # Pretty pointless, but I've caught myself using "goto .." now and then
-if ($path -eq "..") {
+if ($loc -eq "..") {
     Push-Location -Path ..
     exit
 }
-if ($path -eq "-") {
+if ($loc -eq "-") {
     Pop-Location
     exit
 }
-if ($path -eq "~") {
+if ($loc -eq "~") {
     Push-Location -Path ~
     exit
 }
 
 # Get absolute path, because otherwise System.IO.File::GetAttributes
 # tries to find the file/dir within the default directory.
-if (!([System.IO.Path]::IsPathRooted($path))) {
+if (!([System.IO.Path]::IsPathRooted($loc))) {
     $sep = [System.IO.Path]::DirectorySeparatorChar
-    $path = "$pwd$sep$path"
-    $path = [System.IO.Path]::GetFullPath($path)
+    $loc = "$pwd$sep$loc"
+    $loc = [System.IO.Path]::GetFullPath($loc)
 }
 
 # If the file could not be found, then this will return null.
 # We will exit early, so only one error message is displayed.
-$attributeString = [System.IO.File]::GetAttributes($path)
+$attributeString = [System.IO.File]::GetAttributes($loc)
 if ($null -eq $attributeString) {
     exit 1
 }
@@ -48,9 +54,9 @@ $attributes = $attributeString -split ", "
 # so we check it either way.
 if ($attributes.Contains("Directory") -or $attributeString -band [System.IO.FileAttributes]::Directory) {
     # Was a directory
-    Push-Location $path
+    Push-Location $loc
 } else {
     # Was a file
-    $directory = [System.IO.Path]::GetDirectoryName($path)
+    $directory = [System.IO.Path]::GetDirectoryName($loc)
     Push-Location -Path $directory
 }
