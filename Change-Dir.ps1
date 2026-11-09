@@ -27,7 +27,7 @@ if (!($Args.Count -eq 1)) {
     $loc = [String]::Join(" ", $Args);
 }
 
-if ($loc -eq ".") {
+if ($loc -eq "." -or [String]::IsNullOrWhiteSpace($loc)) {
     exit 0
 }
 
