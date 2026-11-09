@@ -9,9 +9,9 @@ such that `cd a b` is equivalent to `cd "a b"`.
 
 param (
     [Parameter(
-        Mandatory=$true,
-        ValueFromPipeline=$true,
-        ValueFromRemainingArguments=$true
+        Mandatory = $true,
+        ValueFromPipeline = $true,
+        ValueFromRemainingArguments = $true
     )
     ][Object[]]$Args
 )
@@ -19,30 +19,75 @@ param (
 if ($Args.Count -eq 0) {
     exit 1
 }
+
+$before = $pwd.Path.Clone()
+
 $loc = $Args[0];
 if (!($Args.Count -eq 1)) {
     $loc = [String]::Join(" ", $Args);
 }
 
+if ($loc -eq ".") {
+    exit 0
+}
+
 if ($loc -eq "-") {
-    Push-Location -Path $pwd -StackName "secondary"
-    Pop-Location -StackName ""
+    Push-Location -Path $before -StackName "secondary"
+    Pop-Location -StackName "primary" *> $null
+    if ($?) {
+        $here = (Get-Location).Path.ToString()
+        if ($before -ne $here) {
+            #Push-Location -Path $before -StackName "secondary"
+            Set-Location -StackName ""
+            Set-Location $here
+        }
+    }
+    else {
+        Pop-Location -StackName "secondary"
+        Write-Host "End of stack reached."
+    }
     exit 0
 }
 
 if ($loc -eq "+") {
+    Push-Location -Path $before -StackName "primary"
     Pop-Location -StackName "secondary" *> $null
+    if ($?) {
+        $here = (Get-Location).Path.ToString()
+        if ($before -ne $here) {
+            #Push-Location -Path $before -StackName "primary"
+            Set-Location -StackName ""
+            Set-Location $here
+        }
+    }
+    else {
+        Pop-Location -StackName "primary"
+        Write-Host "End of stack reached."
+    }
     exit 0
 }
 
 if ($loc -eq "..") {
-    $current = Get-Location;
-    $loc = [System.IO.Path]::GetDirectoryName($current);
+    $loc = $before;
+}
+
+if (![System.IO.Path]::IsPathRooted($loc)) {
+    $dir = [System.IO.Path]::GetFullPath($before)
+    $loc = "$dir$sep$loc"
+}
+# Avoid adding duplicate to the stack.
+if ($before.ToUpper() -eq $loc.ToString().ToUpper()) {
+    exit 0
 }
 
 Pop-Location -StackName "secondary" *> $null
 while ($?) {
     Pop-Location -StackName "secondary" *> $null
 }
+Set-Location -StackName "" *> $null
+Set-Location -Path $before
 
-Push-Location -Path $loc -StackName ""
+Push-Location -Path $loc -StackName "primary"
+if (!$?) {
+    Pop-Location -StackName "primary"
+}
