@@ -4,6 +4,19 @@ Create multiple directories at once, without the extraneous text to stdout that 
 .DESCRIPTION
 Create multiple directories at once, without the extraneous text to stdout that mkdir normally does.
 #>
-foreach ($arg in $args) {
-    New-Item -Type directory -Name $arg > $Null
+
+param (
+    [Parameter(
+        Mandatory,
+        ValueFromPipeline
+    )][string[]]$paths
+)
+
+process {
+    foreach ($path in $paths) {
+        New-Item -Type directory -Name $arg 1> $Null
+        if (!$?) {
+            break
+        }
+    }
 }
