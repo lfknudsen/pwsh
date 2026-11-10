@@ -8,8 +8,18 @@ Outputs a string consisting of <string> repeated <n> times:
 Repeat <n> <string>
 #>
 
+param (
+    [Parameter(Mandatory)][int]$repetitions,
+    [Parameter(Mandatory, ValueFromPipeline)][string]$value
+)
+
+if ($value.Length -eq 1) {
+    $output = [System.String]::new($value[0], $repetitions)
+    return $output
+}
+
 $output = ""
-for ($i = 0; $i -lt $args[0]; $i++) {
-    $output += $args[1]
+for ($i = 0; $i -lt $repetitions; $i++) {
+    $output += $value
 }
 return $output
