@@ -18,8 +18,14 @@ if ($value.Length -eq 1) {
     return $output
 }
 
-$output = ""
+$totalLength = $repetitions * $value.Length
+$output = New-Object char[] $totalLength
+$val = $value.TrimEnd("\r\n").ToCharArray()
+$len = $val.Length
 for ($i = 0; $i -lt $repetitions; $i++) {
-    $output += $value
+    for ($j = 0; $j -lt $len; $j++) {
+        $output[$i * $len + $j] = $val[$j]
+    }
+    
 }
-return $output
+return [System.String]::Concat($output)
