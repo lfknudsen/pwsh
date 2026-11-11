@@ -61,6 +61,7 @@ if ($loc -eq "..") {
 
 if (![System.IO.Path]::IsPathRooted($loc)) {
     $dir = [System.IO.Path]::GetFullPath($before)
+    $sep = [System.IO.Path]::PathSeparator
     $loc = "$dir$sep$loc"
 }
 # Avoid adding duplicate to the stack.
