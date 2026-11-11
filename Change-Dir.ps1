@@ -24,9 +24,9 @@ if ($Args.Count -eq 0) {
     exit 1
 }
 
-$loc = $Args[0];
+$loc = $Args[0]
 if (!($Args.Count -eq 1)) {
-    $loc = [String]::Join(" ", $Args);
+    $loc = [String]::Join(" ", $Args)
 }
 
 if ($loc -eq "." -or [String]::IsNullOrWhiteSpace($loc)) {
@@ -56,12 +56,12 @@ if ($loc -eq "+") {
 }
 
 if ($loc -eq "..") {
-    $loc = [System.IO.Path]::GetDirectoryName($before);
+    $loc = [System.IO.Path]::GetDirectoryName($before)
 }
 
 if (![System.IO.Path]::IsPathRooted($loc)) {
     $dir = [System.IO.Path]::GetFullPath($before)
-    $sep = [System.IO.Path]::PathSeparator
+    $sep = [System.IO.Path]::DirectorySeparatorChar
     $loc = "$dir$sep$loc"
 }
 # Avoid adding duplicate to the stack.
