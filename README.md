@@ -66,10 +66,33 @@ Almost certainly Windows exclusive.\
 Executes `git push` on each remote registered in the current git repository.\
 See [push](https://gitlab.com/lfknudsen/push) for a slightly more feature-rich, natively compiled version I wrote later.
 
+## Cut-Prefix, Cut-Suffix
+
+Cuts the given prefix/suffix from the given string(s) if it is present:
+
+```
+Cut-Prefix <prefix> <string>
+```
+
+```
+Cut-Suffix <suffix> <string>
+```
+
+## Repeat
+
+Very efficiently creates a string by repeating the same character or string of characters
+n times:
+
+```
+Repeat <n> <character>
+Repeat <n> <string>
+```
+
 ## Hide-File (hide)
 
 Adds the 'Hidden' attribute to the given file(s). I'm not sure I've ever used this;
-I may have originally just written it as an experiment. Since refactoring it and fixing some issues it had, I alias this to `hide`.
+I may have originally just written it as an experiment. Since refactoring it
+and fixing some issues it had, I alias this to `hide`.
 
 ```
 hide [-u] <files...>
