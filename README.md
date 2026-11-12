@@ -156,3 +156,22 @@ repo public. Double-check the code or do a dry run first :)
 Opens the dialog window for adding new environment variables.\
 Almost certainly Windows exclusive.
 
+## CLI
+
+### Alias-Exists
+
+Returns true if the given alias exists.
+
+```
+Alias-Exists <alias name>
+```
+
+### Remove-Alias
+
+Safe way to remove an alias, which will not throw an exception if the alias
+did not exist.
+
+```
+Remove-Alias <alias name>
+```
+
