@@ -30,41 +30,43 @@ param (
     [string[]]$variable = "Path"
 )
 
-$values = @()
-if ($variable.Count -eq 0 -and $variable[0] -eq "*") {
-    $variable = [Environment]::GetEnvironmentVariables().Keys
-}
-
-foreach ($var in $variable) {
-    $env = [Environment]::GetEnvironmentVariable($var).TrimEnd(';')
-    if ($env -eq "") {
-        continue
+process {
+    $values = @()
+    if ($variable.Count -eq 0 -and $variable[0] -eq "*") {
+        $variable = [Environment]::GetEnvironmentVariables().Keys
     }
-    $varvalues = $env -split ';'
-    foreach ($value in $varvalues) {
-        $values += $value
-    }
-}
 
-if ($values.Count -eq 0) {
-    return
-}
-
-if ($dedup) {
-    $sort = $true
-}
-
-if ($sort) {
-    [System.Array]::Sort($values)
-}
-if ($dedup) {
-    $prededupped = $values.Clone()
-    $values = @($prededupped[0])
-    for ($i = 1; $i -lt $prededupped.Count; $i++) {
-        if ($prededupped[$i] -ne $values[$values.Count - 1]) {
-            $values += $prededupped[$i]
+    foreach ($var in $variable) {
+        $env = [Environment]::GetEnvironmentVariable($var).TrimEnd(';')
+        if ($env -eq "") {
+            continue
+        }
+        $varvalues = $env -split ';'
+        foreach ($value in $varvalues) {
+            $values += $value
         }
     }
-}
 
-Write-Output $values
+    if ($values.Count -eq 0) {
+        return
+    }
+
+    if ($dedup) {
+        $sort = $true
+    }
+
+    if ($sort) {
+        [System.Array]::Sort($values)
+    }
+    if ($dedup) {
+        $prededupped = $values.Clone()
+        $values = @($prededupped[0])
+        for ($i = 1; $i -lt $prededupped.Count; $i++) {
+            if ($prededupped[$i] -ne $values[$values.Count - 1]) {
+                $values += $prededupped[$i]
+            }
+        }
+    }
+
+    Write-Output $values
+}
