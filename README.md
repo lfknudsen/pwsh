@@ -156,6 +156,16 @@ repo public. Double-check the code or do a dry run first :)
 Opens the dialog window for adding new environment variables.\
 Almost certainly Windows exclusive.
 
+### Get-Env
+
+Returns the value(s) of the given path(s) as an array:
+```
+Get-Env <environment variable name(s)>
+Get-Env *
+```
+
+If given the argument `*`, it will return the values of *all* environment variables.
+
 ## CLI
 
 ### Alias-Exists
@@ -174,4 +184,3 @@ did not exist.
 ```
 Remove-Alias <alias name>
 ```
-
