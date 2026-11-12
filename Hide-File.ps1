@@ -95,6 +95,9 @@ process {
 		return $AttributeList[0..$index - 1] + $AttributeList[$index + 1..($AttributeList.Length - 1)]
 	}
 
+	# Regexp to check if the file attributes are given as an integer or as a comma-separated "list"
+	$rx = [System.Text.RegularExpressions]::Regex("^[0-9]+$")
+
 	if ($u) {
 		$failures = 0 
 		foreach ($name in $files) {
@@ -106,11 +109,18 @@ process {
 				$failures++
 				continue
 			}
+
+			if ($rx.IsMatch($file.Attributes)) {
+				$file.Attributes = $file.Attributes -bxor [System.IO.FileAttributes]::Hidden
+				continue
+			}
+
 			$attributes = $file.Attributes -split ", "
 			$file.Attributes = Remove-Attribute $attributes "Hidden"
 		}
 		Exit $failures
 	}
+
 
 	$failures = 0
 	foreach ($name in $files) {
@@ -128,7 +138,12 @@ process {
 			$failures++
 			continue
 		}
-		# .Attributes is a string for some insane reason (seriously, wtf Microsoft?), so we make it into an array
+
+		if ($rx.IsMatch($file.Attributes)) {
+			$file.Attributes = $file.Attributes -bor [System.IO.FileAttributes]::Hidden
+			continue
+		}
+
 		$attributes = $file.Attributes -split ", "
 		$file.Attributes = Set-Attribute $attributes "Hidden"
 	}
