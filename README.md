@@ -174,7 +174,7 @@ Get-Env *
 
 If given the argument `*`, it will return the values of *all* environment variables.
 If `-sort` is set, it will sort the output alphabetically.
-If `-dedup` is set, the output will not contain duplicate entries.
+If `-dedup` is set, the output will not contain duplicate entries. Implies `-sort`.
 
 ## CLI
 
