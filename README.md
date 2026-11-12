@@ -7,7 +7,8 @@ are an oversight on my part; feel free to open a PR fixing them.
 
 See [this repository](https://gitlab.com/lfknudsen/pwsh-config) for my config file.
 
-## Change-Dir (cd)
+## Traversal
+### Change-Dir (cd)
 
 Automatically transforms multiple inputs into one, so that\
 `cd new location` is instead understood as `cd "new location"`.
@@ -18,7 +19,7 @@ cd <sub directory>
 
 I recommend aliasing this to `cd` in your $profile file.
 
-## goto
+### goto
 
 If the input path is a file, this command will `cd` to its directory.
 If the input path is a directory, this command will just `cd` there directly.
@@ -32,8 +33,8 @@ Example to go to the same directory as your PowerShell config file:
 goto $profile
 ```
 
-
-## New-Dir (ndir)
+## Directory Management
+### New-Dir (ndir)
 
 Creates a new directory with the given name and then enters it.\
 Also omits the huge stdout statement PowerShell normally gives `mkdir`.
@@ -44,7 +45,7 @@ ndir <new dir name>
 
 I personally alias this to `ndir`.
 
-## Make-Dirs (mkdirs)
+### Make-Dirs (mkdirs)
 
 Creates multiple sub-directories at once.\
 I alias this to `mkdirs`.
@@ -53,22 +54,15 @@ I alias this to `mkdirs`.
 mkdirs <new dir name>...
 ```
 
-## Disk-Space (space)
-
-Displays the total and remaining disk space on each drive.\
-Almost certainly Windows exclusive.
-
-## Open-Env (path)
-
-Opens the dialog window for adding new environment variables.\
-Almost certainly Windows exclusive.\
-
-## Push-All
+## Development
+### Push-All
 
 Executes `git push` on each remote registered in the current git repository.\
-See [push](https://gitlab.com/lfknudsen/push) for a slightly more feature-rich, natively compiled version I wrote later.
+See [push](https://gitlab.com/lfknudsen/push) for a slightly more feature-rich,
+natively compiled version I wrote later.
 
-## Cut-Prefix, Cut-Suffix
+## Strings
+### Cut-Prefix, Cut-Suffix
 
 Cuts the given prefix/suffix from the given string(s) if it is present:
 
@@ -80,7 +74,7 @@ Cut-Prefix <prefix> <string>
 Cut-Suffix <suffix> <string>
 ```
 
-## Trim, Trim-Start, Trim-End
+### Trim, Trim-Start, Trim-End
 
 Removes any characters in <chars> from the start/end/both of the string(s):
 If no <chars> is given, trims whitespace instead.
@@ -91,7 +85,7 @@ Trim-Start [<chars>] <string>
 Trim-End [<chars>] <string>
 ```
 
-## Repeat
+### Repeat
 
 Very efficiently creates a string by repeating the same character or string of
 characters n times:
@@ -101,7 +95,7 @@ Repeat <n> <character>
 Repeat <n> <string>
 ```
 
-## Split-On
+### Split-On
 
 Splits the input string into an array based on the given delimiter character
 (which will not be included in the output). Empty elements are omitted from the
@@ -111,7 +105,7 @@ output.
 Split-On <delimeter> <string>
 ```
 
-## Merge
+### Merge
 
 Joins together multiple strings, putting <between> in-between.
 
@@ -119,7 +113,14 @@ Joins together multiple strings, putting <between> in-between.
 Merge <between> <strings>
 ```
 
-## Hide-File (hide)
+## File Management
+
+### Disk-Space (space)
+
+Displays the total and remaining disk space on each drive.\
+Almost certainly Windows exclusive.
+
+### Hide-File (hide)
 
 Adds the 'Hidden' attribute to the given file(s). I'm not sure I've ever used this;
 I may have originally just written it as an experiment. Since refactoring it
@@ -131,15 +132,27 @@ hide [-u] <files...>
 
 If supplied with `-u` will reveal the file(s) instead.
 
-## Reveal-File (reveal, unhide)
+### Reveal-File (reveal, unhide)
 
-Removes the 'Hidden' attribute from the given file(s). I wrote this when refactoring Hide-File.ps1.
+Removes the 'Hidden' attribute from the given file(s). I wrote this when
+refactoring Hide-File.ps1.
 I alias this to `reveal` and `unhide`.
 
-`reveal <file(s)` is equivalent to `hide -u <file(s)>`, but you can only alias a command on its own (i.e. you cannot include -u in the alias value), and as such I decided to make it standalone.
+`reveal <file(s)` is equivalent to `hide -u <file(s)>`, but you can only alias
+a command on its own (i.e. you cannot include -u in the alias value), and as
+such I decided to make it standalone.
 
 
-## Change-Name
+### Change-Name
 
-Batch renaming of files not affecting their extensions. I don't remember when I wrote this, and so it may not have been complete when I decided to make this repo public. Double-check
-the code or do a dry run first :)
+Batch renaming of files not affecting their extensions. I don't remember when I
+wrote this, and so it may not have been complete when I decided to make this
+repo public. Double-check the code or do a dry run first :)
+
+## Environment Variables
+
+### Open-Env (path)
+
+Opens the dialog window for adding new environment variables.\
+Almost certainly Windows exclusive.
+
