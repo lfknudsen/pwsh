@@ -102,7 +102,7 @@ process {
 		$file = Get-Item -Force -ErrorAction SilentlyContinue $name
 		if ($null -eq $file) {
 			if (!$quiet) {
-				Write-Host "$file is either a system file or not a file at all."
+				Write-Host "$name is either a system file or not a file at all."
 			}
 			$failures++
 			continue
