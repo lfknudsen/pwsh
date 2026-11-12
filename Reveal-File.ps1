@@ -6,8 +6,12 @@ Removes the 'Hidden' attribute from the given file(s), if present.
 #>
 
 param (
-    [Parameter]$quiet = $false,
-    [Parameter(Mandatory, ValueFromPipeline, ValueFromRemainingArguments)]
+    [Parameter(Mandatory = $false)]
+    [switch]$quiet = $false,
+    [Parameter(
+        Mandatory,
+        ValueFromPipeline,
+        ValueFromRemainingArguments)]
     [string[]]$files
 )
 
@@ -68,6 +72,10 @@ process {
 
         return $array[0..$index - 1] + $array[$index + 1..$last]
     }
+
+
+	# Regexp to check if the file attributes are given as an integer or as a comma-separated "list"
+	$rx = [System.Text.RegularExpressions.Regex]::new("^[0-9]+$")
 
     $failures = 0 
     foreach ($name in $files) {
