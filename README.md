@@ -168,11 +168,13 @@ Almost certainly Windows exclusive.
 
 Returns the value(s) of the given path(s) as an array:
 ```
-Get-Env <environment variable name(s)>
+Get-Env [-sort] [-dedup] <environment variable name(s)>
 Get-Env *
 ```
 
 If given the argument `*`, it will return the values of *all* environment variables.
+If `-sort` is set, it will sort the output alphabetically.
+If `-dedup` is set, the output will not contain duplicate entries.
 
 ## CLI
 
