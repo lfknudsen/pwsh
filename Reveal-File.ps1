@@ -16,6 +16,17 @@ param (
 )
 
 process {
+	function Report {
+		param (
+			[Parameter(Mandatory)]
+			[string]$message
+		)
+
+		if (!$quiet) {
+			Write-Host $message
+		}
+	}
+    
     # Given an array and a value, returns the index of the first occurence of the value.
     # If the value is not found in the array, returns -1.
     function Find-Value {
@@ -76,20 +87,19 @@ process {
 
 	# Regexp to check if the file attributes are given as an integer or as a comma-separated "list"
 	$rx = [System.Text.RegularExpressions.Regex]::new("^[0-9]+$")
-
+    $esc = [char]27
     $failures = 0 
     foreach ($name in $files) {
         $file = Get-Item -Force -ErrorAction SilentlyContinue $name
         if ($null -eq $file) {
-            if (!$quiet) {
-                Write-Host "$name is either a system file or not a file at all."
-            }
+            Report "$esc[033m$name$esc[0m is either a system file or not a file at all."
             $failures++
             continue
         }
 
         if ($null -eq $file.Attributes -or $rx.IsMatch($file.Attributes)) {
             $file.Attributes = $file.Attributes -bxor [System.IO.FileAttributes]::Hidden
+            Report "$esc[033m$name$esc[0m has been revealed."
             continue
         }
 
@@ -98,6 +108,7 @@ process {
         if ($index -ne -1) {
             $file.Attributes = Remove-At $attributes $index
         }
+        Report "$esc[033m$name$esc[0m has been revealed."
     }
     Exit $failures
 }
