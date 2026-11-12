@@ -150,6 +150,13 @@ I alias this to `reveal` and `unhide`.
 a command on its own (i.e. you cannot include -u in the alias value), and as
 such I decided to make it standalone.
 
+### Parent
+
+Get the base name of the parent directory to the current working directory.
+
+### Get-DirName
+
+Get the base name of the current working directory.
 
 ### Change-Name
 
