@@ -9,7 +9,9 @@ param (
         Mandatory = $true,
         ValueFromPipeline = $true
     )]
-    [string]$alias
+    [string[]]$alias
 )
-Get-Alias $alias *> $null
-return $?
+process {
+    Get-Alias $alias *> $null
+    return $?
+}
