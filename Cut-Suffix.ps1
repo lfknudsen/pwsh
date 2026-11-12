@@ -1,3 +1,11 @@
+<#
+.SYNOPSIS
+Cut the given suffix from the given string(s).
+If the suffix isn't found, the string is unaltered.
+.DESCRIPTION
+Cut the given suffix from the given string(s).
+If the suffix isn't found, the string is unaltered.
+#>
 param (
     [Parameter(
         Mandatory = $true
