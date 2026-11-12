@@ -1,3 +1,10 @@
+<#
+.SYNOPSIS
+Hides the given file(s).
+.DESCRIPTION
+Hides the given file(s).
+#>
+
 # Exit with error code and error message if no arguments given.
 if ($args.count -eq 0) {
 	Write-Host "No arguments given."
