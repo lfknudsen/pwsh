@@ -111,6 +111,14 @@ output.
 Split-On <delimeter> <string>
 ```
 
+## Merge
+
+Joins together multiple strings, putting <between> in-between.
+
+```
+Merge <between> <strings>
+```
+
 ## Hide-File (hide)
 
 Adds the 'Hidden' attribute to the given file(s). I'm not sure I've ever used this;
