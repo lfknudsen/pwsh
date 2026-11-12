@@ -99,13 +99,13 @@ process {
 		foreach ($name in $files) {
 			$file = Get-Item -Force -ErrorAction SilentlyContinue $name
 			if ($null -eq $file) {
-				Write-Host "$file is either a system file, not hidden, or not a file at all."
+				if (!$quiet) {
+					Write-Host "$file is either a system file, not hidden, or not a file at all."
+				}
 				continue
 			}
 			$attributes = $file.Attributes -split ", "
-			Write-Debug "${file} attributes before: ${file.Attributes}"
 			$file.Attributes = Remove-Attribute $attributes "Hidden"
-			Write-Debug "${file} attributes after: ${file.Attributes}"
 		}
 		Exit 0
 	}
