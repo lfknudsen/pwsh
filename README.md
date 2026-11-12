@@ -119,6 +119,15 @@ Merge <between> <strings>
 
 Displays the total and remaining disk space on each drive.\
 Almost certainly Windows exclusive.
+Example:
+
+```
+$ space
+Disk  Total size Free space
+---- ----------- ----------
+C:     475.69 GB   41.22 GB
+D:   14752.69 GB  987.70 GB
+```
 
 ### Hide-File (hide)
 
