@@ -10,14 +10,29 @@ See [this repository](https://gitlab.com/lfknudsen/pwsh-config) for my config fi
 ## Traversal
 ### Change-Dir (cd)
 
-Automatically transforms multiple inputs into one, so that\
-`cd new location` is instead understood as `cd "new location"`.
+This is my override of the standard `cd`;  I strongly recommend aliasing this to `cd` in your
+$profile file. It has a few extra features you may like.
+
+Basic use, just like regular `cd`:
+```
+cd <directory path>
+cd ..
+cd ~
+```
+
+#### Additions:
+
+1. It automatically transforms multiple inputs into one, so that `cd new location` is instead understood as `cd "new location"`.
+2. It also supports the Bash `-` to return to the last directory visited:
+```
+cd -
+```
+
+3. It supports my own invention, the `+`, to go forward in the `-` history:
 
 ```
-cd <sub directory>
+cd +
 ```
-
-I recommend aliasing this to `cd` in your $profile file.
 
 ### goto
 
