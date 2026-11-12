@@ -1,7 +1,9 @@
 # PWSH - Powershell Commands
 
 Shell scripts I use. Each header below shows the script name followed\
-by what I personally alias it to.
+by what I personally alias it to. Generally speaking, scripts support
+pipeline multi-line pipeline input for batch processing. Any that do not
+are an oversight on my part; feel free to open a PR fixing them.
 
 See [this repository](https://gitlab.com/lfknudsen/pwsh-config) for my config file.
 
@@ -80,8 +82,8 @@ Cut-Suffix <suffix> <string>
 
 ## Repeat
 
-Very efficiently creates a string by repeating the same character or string of characters
-n times:
+Very efficiently creates a string by repeating the same character or string of
+characters n times:
 
 ```
 Repeat <n> <character>
