@@ -108,12 +108,12 @@ process {
 
 	# Regexp to check if the file attributes are given as an integer or as a comma-separated "list"
 	$rx = [System.Text.RegularExpressions.Regex]::new("^[0-9]+$")
-
+	$esc = [char]27
 	$failures = 0
 	foreach ($name in $files) {
 		$file = Get-Item -Force -ErrorAction SilentlyContinue $name
 		if ($null -eq $file) {
-			Report "$name is either a system file or not a file at all."
+			Report "$esc[033m$name$esc[0m is either a system file or not a file at all."
 			$failures++
 			continue
 		}
@@ -121,10 +121,10 @@ process {
 		if ($null -eq $file.Attributes -or $rx.IsMatch($file.Attributes)) {
 			if ($u) {
 				$file.Attributes = $file.Attributes -bxor [System.IO.FileAttributes]::Hidden
-				Report "$name has been revealed."
+				Report "$esc[033m$name$esc[0m has been revealed."
 			} else {
 				$file.Attributes = $file.Attributes -bor [System.IO.FileAttributes]::Hidden
-				Report "$name has been hidden."
+				Report "$esc[033m$name$esc[0m has been hidden."
 			}
 			continue
 		}
@@ -132,11 +132,11 @@ process {
 		$attributes = $file.Attributes -split ", "
 		if ($u) {
 			$file.Attributes = Remove-Attribute $attributes "Hidden"
-			Report "$name has been revealed."
+			Report "$esc[033m$name$esc[0m has been revealed."
 		}
 		else {
 			$file.Attributes = Set-Attribute $attributes "Hidden"
-			Report "$name has been hidden."
+			Report "$esc[033m$name$esc[0m has been hidden."
 		}
 	}
 	exit $failures
