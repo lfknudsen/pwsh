@@ -5,6 +5,11 @@ Removes the 'Hidden' attribute from the given file(s), if present.
 Removes the 'Hidden' attribute from the given file(s), if present.
 #>
 
+param (
+    [Parameter(Mandatory, ValueFromPipeline, ValueFromRemainingArguments)]
+    [string[]]$files
+)
+
 process {
     # Given an array and a value, returns the index of the first occurence of the value.
     # If the value is not found in the array, returns -1.
@@ -63,7 +68,7 @@ process {
         return $array[0..$index - 1] + $array[$index + 1..$last]
     }
 
-    foreach ($name in $args) {
+    foreach ($name in $files) {
         $file = Get-Item -Force -ErrorAction SilentlyContinue $name
         if ($null -eq $file) {
             Write-Host "$file is either a system file or not a file at all."
