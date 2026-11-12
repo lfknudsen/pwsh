@@ -80,6 +80,17 @@ Cut-Prefix <prefix> <string>
 Cut-Suffix <suffix> <string>
 ```
 
+## Trim, Trim-Start, Trim-End
+
+Removes any characters in <chars> from the start/end/both of the string(s):
+If no <chars> is given, trims whitespace instead.
+
+```
+Trim [<chars>] <string>
+Trim-Start [<chars>] <string>
+Trim-End [<chars>] <string>
+```
+
 ## Repeat
 
 Very efficiently creates a string by repeating the same character or string of
