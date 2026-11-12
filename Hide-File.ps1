@@ -9,9 +9,12 @@ If set, the programme reveals the file(s) instead of hiding them.
 If set, do not print anything to stdout on error.
 .PARAMETER files
 Path(s) to the file(s) to execute this programme on.
+.PARAMETER successes
+Any file-paths that were successfully hidden/revealed are passed along in the pipeline.
 #>
 
 param(
+	[Parameter()][switch]$successes = $false,
 	[Parameter()][switch]$quiet = $false,
 	[Parameter()][switch]$u = $false,
 	[Parameter(Mandatory, ValueFromPipeline, ValueFromRemainingArguments)][string[]]$files
@@ -121,10 +124,12 @@ process {
 		if ($null -eq $file.Attributes -or $rx.IsMatch($file.Attributes)) {
 			if ($u) {
 				$file.Attributes = $file.Attributes -bxor [System.IO.FileAttributes]::Hidden
-				Report "$esc[033m$name$esc[0m has been revealed."
-			} else {
+			}
+			else {
 				$file.Attributes = $file.Attributes -bor [System.IO.FileAttributes]::Hidden
-				Report "$esc[033m$name$esc[0m has been hidden."
+			}
+			if ($successes) {
+				Write-Output $name
 			}
 			continue
 		}
@@ -132,11 +137,12 @@ process {
 		$attributes = $file.Attributes -split ", "
 		if ($u) {
 			$file.Attributes = Remove-Attribute $attributes "Hidden"
-			Report "$esc[033m$name$esc[0m has been revealed."
 		}
 		else {
 			$file.Attributes = Set-Attribute $attributes "Hidden"
-			Report "$esc[033m$name$esc[0m has been hidden."
+		}
+		if ($successes) {
+			Write-Output $name
 		}
 	}
 	exit $failures
