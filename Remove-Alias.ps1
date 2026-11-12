@@ -13,6 +13,4 @@ param (
     )]
     [string]$alias
 )
-if (Alias-Exists $alias) {
-    Remove-Item Alias:$alias
-}
+Remove-Item Alias:$alias *> $null
