@@ -96,20 +96,23 @@ process {
 	}
 
 	if ($u) {
+		$failures = 0 
 		foreach ($name in $files) {
 			$file = Get-Item -Force -ErrorAction SilentlyContinue $name
 			if ($null -eq $file) {
 				if (!$quiet) {
 					Write-Host "$file is either a system file, not hidden, or not a file at all."
 				}
+				$failures++
 				continue
 			}
 			$attributes = $file.Attributes -split ", "
 			$file.Attributes = Remove-Attribute $attributes "Hidden"
 		}
-		Exit 0
+		Exit $failures
 	}
 
+	$failures = 0
 	foreach ($name in $files) {
 		$file = Get-Item -ErrorAction SilentlyContinue $name
 		if ($null -eq $file) {
@@ -122,12 +125,12 @@ process {
 					Write-Host "Could not find ${name}."
 				}	
 			}
+			$failures++
 			continue
 		}
 		# .Attributes is a string for some insane reason (seriously, wtf Microsoft?), so we make it into an array
 		$attributes = $file.Attributes -split ", "
-		Write-Debug "${file} attributes before: ${attributes}"
 		$file.Attributes = Set-Attribute $attributes "Hidden"
-		Write-Debug "${file} attributes after: $($file.attributes)"
 	}
+	exit $failures
 }
