@@ -6,6 +6,7 @@ Removes the 'Hidden' attribute from the given file(s), if present.
 #>
 
 param (
+    [Parameter]$quiet = $false,
     [Parameter(Mandatory, ValueFromPipeline, ValueFromRemainingArguments)]
     [string[]]$files
 )
@@ -68,16 +69,27 @@ process {
         return $array[0..$index - 1] + $array[$index + 1..$last]
     }
 
+    $failures = 0 
     foreach ($name in $files) {
         $file = Get-Item -Force -ErrorAction SilentlyContinue $name
         if ($null -eq $file) {
-            Write-Host "$file is either a system file or not a file at all."
+            if (!$quiet) {
+                Write-Host "$file is either a system file or not a file at all."
+            }
+            $failures++
             continue
         }
+
+        if ($null -eq $file.Attributes -or $rx.IsMatch($file.Attributes)) {
+            $file.Attributes = $file.Attributes -bxor [System.IO.FileAttributes]::Hidden
+            continue
+        }
+
         $attributes = $file.Attributes -split ", "
         $index = Find-Value $attributes "Hidden"
         if ($index -ne -1) {
             $file.Attributes = Remove-At $attributes $index
         }
     }
+    Exit $failures
 }
