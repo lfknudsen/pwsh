@@ -31,7 +31,7 @@ param (
 )
 
 $values = @()
-if ($variable -eq "*") {
+if ($variable.Count -eq 0 -and $variable[0] -eq "*") {
     $variable = [Environment]::GetEnvironmentVariables().Keys
 }
 
