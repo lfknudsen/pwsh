@@ -90,6 +90,16 @@ Repeat <n> <character>
 Repeat <n> <string>
 ```
 
+## Split-On
+
+Splits the input string into an array based on the given delimiter character
+(which will not be included in the output). Empty elements are omitted from the
+output.
+
+```
+Split-On <delimeter> <string>
+```
+
 ## Hide-File (hide)
 
 Adds the 'Hidden' attribute to the given file(s). I'm not sure I've ever used this;
