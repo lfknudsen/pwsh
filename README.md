@@ -87,8 +87,7 @@ Trim-End [<chars>] <string>
 
 ### Repeat
 
-Very efficiently creates a string by repeating the same character or string of
-characters n times:
+Very efficiently creates a string of repeated characters or strings:
 
 ```
 Repeat <n> <character>
