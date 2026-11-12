@@ -23,7 +23,7 @@ process {
 		if (!$quiet) {
 			Write-Error "No arguments given."
 		}
-		return 1
+		return -1
 	}
 
 	# Given an array and a value, returns the index of the first occurence of the value.
@@ -97,55 +97,32 @@ process {
 
 	# Regexp to check if the file attributes are given as an integer or as a comma-separated "list"
 	$rx = [System.Text.RegularExpressions.Regex]::new("^[0-9]+$")
-
-	if ($u) {
-		$failures = 0 
-		foreach ($name in $files) {
-			$file = Get-Item -Force -ErrorAction SilentlyContinue $name
-			if ($null -eq $file) {
-				if (!$quiet) {
-					Write-Host "$file is either a system file, not hidden, or not a file at all."
-				}
-				$failures++
-				continue
-			}
-
-			if ($null -eq $file.Attributes -or $rx.IsMatch($file.Attributes)) {
-				$file.Attributes = $file.Attributes -bxor [System.IO.FileAttributes]::Hidden
-				continue
-			}
-
-			$attributes = $file.Attributes -split ", "
-			$file.Attributes = Remove-Attribute $attributes "Hidden"
-		}
-		Exit $failures
-	}
-
-
 	$failures = 0
 	foreach ($name in $files) {
-		$file = Get-Item -ErrorAction SilentlyContinue $name
+		$file = Get-Item -Force -ErrorAction SilentlyContinue $name
 		if ($null -eq $file) {
-			$file = Get-item -Force -ErrorAction SilentlyContinue $name
 			if (!$quiet) {
-				if (!($null -eq $file)) {
-					Write-Host "$file is either already hidden, a system file, or not a file at all."
-				}
-				else {
-					Write-Host "Could not find ${name}."
-				}	
+				Write-Host "$file is either a system file or not a file at all."
 			}
 			$failures++
 			continue
 		}
 
 		if ($null -eq $file.Attributes -or $rx.IsMatch($file.Attributes)) {
-			$file.Attributes = $file.Attributes -bor [System.IO.FileAttributes]::Hidden
+			if ($u) {
+				$file.Attributes = $file.Attributes -bxor [System.IO.FileAttributes]::Hidden
+			} else {
+				$file.Attributes = $file.Attributes -bor [System.IO.FileAttributes]::Hidden
+			}
 			continue
 		}
 
 		$attributes = $file.Attributes -split ", "
-		$file.Attributes = Set-Attribute $attributes "Hidden"
+		if ($u) {
+			$file.Attributes = Remove-Attribute $attributes "Hidden"
+		} else {
+			$file.Attributes = Set-Attribute $attributes "Hidden"
+		}
 	}
 	exit $failures
 }
