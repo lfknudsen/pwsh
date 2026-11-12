@@ -36,12 +36,13 @@ process {
         $variable = [Environment]::GetEnvironmentVariables().Keys
     }
 
+    $sep = [System.IO.Path]::PathSeparator
     foreach ($var in $variable) {
-        $env = [Environment]::GetEnvironmentVariable($var).TrimEnd(';')
+        $env = [Environment]::GetEnvironmentVariable($var).TrimEnd($sep)
         if ($env -eq "") {
             continue
         }
-        $varvalues = $env -split ';'
+        $varvalues = $env -split $sep
         foreach ($value in $varvalues) {
             $values += $value
         }
