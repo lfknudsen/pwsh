@@ -70,6 +70,12 @@ mkdirs <new dir name>...
 ```
 
 ## Development
+
+### Clone
+
+Clones the given Git repository and then enters the newly-created directory.
+It will also automatically prepend `https://` if needed.
+
 ### Push-All
 
 Executes `git push` on each remote registered in the current git repository.\
