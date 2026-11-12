@@ -1,3 +1,11 @@
+<#
+.SYNOPSIS
+Cut the given prefix from the given string(s).
+If the prefix isn't found, the string is unaltered.
+.DESCRIPTION
+Cut the given prefix from the given string(s).
+If the prefix isn't found, the string is unaltered.
+#>
 param (
     [Parameter(
         Mandatory
