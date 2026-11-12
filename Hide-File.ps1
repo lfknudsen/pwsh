@@ -96,7 +96,7 @@ process {
 	}
 
 	# Regexp to check if the file attributes are given as an integer or as a comma-separated "list"
-	$rx = [System.Text.RegularExpressions]::Regex("^[0-9]+$")
+	$rx = [System.Text.RegularExpressions.Regex]::new("^[0-9]+$")
 
 	if ($u) {
 		$failures = 0 
@@ -110,7 +110,7 @@ process {
 				continue
 			}
 
-			if ($rx.IsMatch($file.Attributes)) {
+			if ($null -eq $file.Attributes -or $rx.IsMatch($file.Attributes)) {
 				$file.Attributes = $file.Attributes -bxor [System.IO.FileAttributes]::Hidden
 				continue
 			}
@@ -139,7 +139,7 @@ process {
 			continue
 		}
 
-		if ($rx.IsMatch($file.Attributes)) {
+		if ($null -eq $file.Attributes -or $rx.IsMatch($file.Attributes)) {
 			$file.Attributes = $file.Attributes -bor [System.IO.FileAttributes]::Hidden
 			continue
 		}
