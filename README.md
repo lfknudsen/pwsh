@@ -150,10 +150,13 @@ I may have originally just written it as an experiment. Since refactoring it
 and fixing some issues it had, I alias this to `hide`.
 
 ```
-hide [-u] <files...>
+hide [-u] [-quiet] [-successes] <files...>
 ```
 
-If supplied with `-u` will reveal the file(s) instead.
+If `-u`, will reveal the file(s) instead.\
+If `-quiet`, will not print error messages if a file could not be found or opened.\
+If `-successes`, will output the path of each file in `<files>` that *could* be successfully
+hidden/revealed. This flag allows you to use the script in the middle of a pipeline.
 
 ### Reveal-File (reveal, unhide)
 
