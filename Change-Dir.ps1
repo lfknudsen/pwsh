@@ -33,6 +33,11 @@ if ($loc -eq "." -or [String]::IsNullOrWhiteSpace($loc)) {
     exit 0
 }
 
+$sep = [System.IO.Path]::DirectorySeparatorChar
+if ($loc.EndsWith(":")) {
+    $loc += $sep
+}
+
 $before = (Get-Location).Path.Clone()
 
 if ($loc -eq "-") {
@@ -61,7 +66,6 @@ if ($loc -eq "..") {
 
 if (![System.IO.Path]::IsPathRooted($loc)) {
     $dir = [System.IO.Path]::GetFullPath($before)
-    $sep = [System.IO.Path]::DirectorySeparatorChar
     $loc = "$dir$sep$loc"
 }
 # Avoid adding duplicate to the stack.
