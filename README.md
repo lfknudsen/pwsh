@@ -40,6 +40,12 @@ cd +
 cd ?
 ```
 
+5. You can use `^` to go the root of the current directory (e.g. C:\\):
+
+```
+cd ^
+```
+
 ### goto
 
 If the input path is a file, this command will `cd` to its directory.
