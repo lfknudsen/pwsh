@@ -10,7 +10,7 @@ such that `cd a b` is equivalent to `cd "a b"`.
 Use `cd -` to go back in history.
 Use `cd +` to go forward in history.
 Use `cd ^` to go to top-most root directory.
-Use `cd ?` to go to initial directory (requires my $profile!)
+Use `cd =` to go to initial directory (requires my $profile!)
 #>
 
 param (
@@ -37,7 +37,7 @@ if ($loc -eq "." -or [String]::IsNullOrWhiteSpace($loc)) {
 
 if ($loc -eq "^") {
     $loc = $pwd.Drive.Root
-} elseif ($loc -eq "?") {
+} elseif ($loc -eq "=") {
     $loc = $___initialDirectory___
 }
 

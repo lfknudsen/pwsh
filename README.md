@@ -34,10 +34,10 @@ cd -
 cd +
 ```
 
-4. You can use `?` to go your initial directory (requires my $profile):
+4. You can use `=` to go your initial directory (requires my $profile):
 
 ```
-cd ?
+cd =
 ```
 
 5. You can use `^` to go the root of the current directory (e.g. C:\\):
