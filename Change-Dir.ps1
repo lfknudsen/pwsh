@@ -7,8 +7,10 @@ Set the location of the shell. Arguments are joined into a single string,
 such that `cd a b` is equivalent to `cd "a b"`.
 
 `cd ..` works as normal.
-Use `cd -` to go to last location.
+Use `cd -` to go back in history.
 Use `cd +` to go forward in history.
+Use `cd ^` to go to top-most root directory.
+Use `cd ?` to go to initial directory (requires my $profile!)
 #>
 
 param (
