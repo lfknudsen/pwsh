@@ -33,6 +33,10 @@ if ($loc -eq "." -or [String]::IsNullOrWhiteSpace($loc)) {
     exit 0
 }
 
+if ($loc -eq "^") {
+    $loc = $pwd.Drive.Root
+}
+
 $sep = [System.IO.Path]::DirectorySeparatorChar
 if ($loc.EndsWith(":")) {
     $loc += $sep
