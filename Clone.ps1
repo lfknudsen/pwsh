@@ -1,3 +1,13 @@
+<#
+.SYNOPSIS
+Convenience script for cloning a Git repository.
+Will automatically prepend 'https://' if necessary, and will
+enter the new directory after it has been created.
+.DESCRIPTION
+Convenience script for cloning a Git repository.
+Will automatically prepend 'https://' if necessary, and will
+enter the new directory after it has been created.
+#>
 param (
     [Parameter(Mandatory)][string]$url
 )
