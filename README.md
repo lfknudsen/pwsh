@@ -34,6 +34,12 @@ cd -
 cd +
 ```
 
+4. You can use `?` to go your initial directory (requires my $profile):
+
+```
+cd ?
+```
+
 ### goto
 
 If the input path is a file, this command will `cd` to its directory.
