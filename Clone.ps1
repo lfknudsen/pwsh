@@ -25,4 +25,6 @@ if (!$url.StartsWith("https://")) {
 }
 
 git clone $url
-cd $base
+if ($?) {
+    cd $base
+}
