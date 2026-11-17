@@ -26,8 +26,10 @@ if ($Args.Count -eq 0) {
     exit 1
 }
 
-$loc = $Args[0]
-if (!($Args.Count -eq 1)) {
+$loc = ""
+if ($Args.Count -eq 1) {
+    $loc = [String]::Concat($Args)
+} else {
     $loc = [String]::Join(" ", $Args)
 }
 
